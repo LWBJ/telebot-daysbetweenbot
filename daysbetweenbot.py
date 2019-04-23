@@ -116,7 +116,7 @@ def days_between(bot, update):
 def start(bot, update):
   message = """Hello! This is DaysBetweenBot.
 
-I can track the days since or days until a target date. I can also calculate the days between any 2 dates
+I can track the days since or days until a target date. I can also calculate the days between any 2 dates. Use /setTZ for a more accurate measurement!
 
 Use /help to find out about my commands"""
   update.message.reply_text(text=message)
@@ -124,12 +124,14 @@ Use /help to find out about my commands"""
 def help(bot, update):
   message = """/help - This command
 
-/dayssince - input a date in DD-MM-YYYY format after the space. Tracks the days since a target date.
+/dayssince - Input a date in DD-MM-YYYY format after the space. Tracks the days since a target date.
 
-/daysuntil - input a date in DD-MM-YYYY format after the space. Tracks the days until a target date.
+/daysuntil - Input a date in DD-MM-YYYY format after the space. Tracks the days until a target date.
 
-/daysbetween - input 2 dates in DD-MM-YYYY format, separated by spaces. For example:
+/daysbetween - Input 2 dates in DD-MM-YYYY format, separated by spaces. For example:
 "/daysbetween 01-01-2019 02-01-2019". Calculates the days between 2 dates.
+
+/setTZ - Add a valid GMT timezone difference after the space. It must be an integer between -12 and 12.
 
 Remember to input dates as DD-MM-YYYY, including the dashes!"""
   update.message.reply_text(text=message)
