@@ -1,3 +1,4 @@
+#reactivated to test os[database], connections, importing
 #temp disabled
 import datetime
 import psycopg2
