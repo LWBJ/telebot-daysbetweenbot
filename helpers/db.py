@@ -1,10 +1,11 @@
+#testing stack overflow code pt 1
 #reactivated to test os[database], connections, importing
 #temp disabled
 import datetime
 import psycopg2
 
-def create_table(DATABASE_URL):
-  conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+def create_table(url, dbname, user, password, host, port):
+  conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host, port=port)
   cur = conn.cursor()
   stmt = """CREATE TABLE IF NOT EXISTS user_tz_table (
 user_id INTEGER PRIMARY KEY,
