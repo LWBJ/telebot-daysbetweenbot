@@ -1,12 +1,17 @@
+#commented out all TZs, uses TZ = +1h instead
+#commented out all add_to_SQL, create_tables()
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from telegram import InlineKeyboardButton as IKB, InlineKeyboardMarkup as IKM
 from helpers.helpers import *
-from helpers.db import *
+#from helpers.db import *
 import datetime
 import os
 
 def days_since(bot, update):
-  tz = timezone(update.message.from_user.id, DATABASE_URL)
+  #tz = timezone(update.message.from_user.id, DATABASE_URL)
+  tz = datetime.timedelta(hours=1)
+  
   date_str = update.message.text.partition(" ")[2]
   if is_valid_since(date_str, tz):
     date_proper = get_date_proper(date_str)
@@ -21,7 +26,9 @@ def days_since(bot, update):
     update.message.reply_text(text="Please input a valid date in DD-MM-YYYY format!")
 
 def days_until(bot, update):
-  tz = timezone(update.message.from_user.id, DATABASE_URL)
+  #tz = timezone(update.message.from_user.id, DATABASE_URL)
+  tz = datetime.timedelta(hours=1)
+  
   date_str = update.message.text.partition(" ")[2]
   if is_valid_until(date_str, tz) == "today":
     update.message.reply_text(text="That date is today!")
@@ -39,7 +46,9 @@ def days_until(bot, update):
   
 def button(bot, update):
   query = update.callback_query
-  tz = timezone(query.from_user.id, DATABASE_URL)
+  #tz = timezone(query.from_user.id, DATABASE_URL)
+  tz = datetime.timedelta(hours=1)
+  
   date_str = get_date_str_from_message(query.message.text)
   date_proper = get_date_proper(date_str)
 
@@ -135,7 +144,7 @@ def set_timezone(bot, update):
   user_input = update.message.text.partition(" ")[2]
   if valid_timezone(user_input):
     tz_int = int(user_input)
-    add_to_SQL(update.message.from_user.id, tz_int, DATABASE_URL)
+    #add_to_SQL(update.message.from_user.id, tz_int, DATABASE_URL)
     update.message.reply_text(text="Timezone set!")
   else:
     update.message.reply_text(text="Please input a valid GMT timezone difference. It should be an integer between -12 and 12")
@@ -144,9 +153,9 @@ def main():
   TOKEN = "885176927:AAH-A3nAlzHY0_vEQ0LB4r-zasQO3DO1yLw"
   NAME = "jpdaysbetweenbot"
   PORT = os.environ.get('PORT')
-  DATABASE_URL = os.environ['DATABASE_URL']
+  #DATABASE_URL = os.environ['DATABASE_URL']
   
-  create_table(DATABASE_URL)
+  #create_table(DATABASE_URL)
   
   updater = Updater(token=TOKEN)
   dp = updater.dispatcher
