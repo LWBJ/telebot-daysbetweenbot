@@ -1,19 +1,12 @@
-#Trying SQL code from stack overflow
-#bot works. trying 1 line of SQL now
-#commented out all TZs, uses TZ = +1h instead
-#commented out all add_to_SQL, create_tables()
-
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from telegram import InlineKeyboardButton as IKB, InlineKeyboardMarkup as IKM
 from helpers.helpers import *
 from helpers.db import *
 import datetime
 import os
-import urllib.parse as urlparse
 
 def days_since(bot, update):
-  #tz = timezone(update.message.from_user.id, DATABASE_URL)
-  tz = datetime.timedelta(hours=1)
+  tz = timezone(update.message.from_user.id)
   
   date_str = update.message.text.partition(" ")[2]
   if is_valid_since(date_str, tz):
@@ -29,8 +22,7 @@ def days_since(bot, update):
     update.message.reply_text(text="Please input a valid date in DD-MM-YYYY format!")
 
 def days_until(bot, update):
-  #tz = timezone(update.message.from_user.id, DATABASE_URL)
-  tz = datetime.timedelta(hours=1)
+  tz = timezone(update.message.from_user.id)
   
   date_str = update.message.text.partition(" ")[2]
   if is_valid_until(date_str, tz) == "today":
@@ -49,8 +41,7 @@ def days_until(bot, update):
   
 def button(bot, update):
   query = update.callback_query
-  #tz = timezone(query.from_user.id, DATABASE_URL)
-  tz = datetime.timedelta(hours=1)
+  tz = timezone(query.from_user.id)
   
   date_str = get_date_str_from_message(query.message.text)
   date_proper = get_date_proper(date_str)
@@ -147,7 +138,7 @@ def set_timezone(bot, update):
   user_input = update.message.text.partition(" ")[2]
   if valid_timezone(user_input):
     tz_int = int(user_input)
-    #add_to_SQL(update.message.from_user.id, tz_int, DATABASE_URL)
+    add_to_SQL(update.message.from_user.id, tz_int)
     update.message.reply_text(text="Timezone set!")
   else:
     update.message.reply_text(text="Please input a valid GMT timezone difference. It should be an integer between -12 and 12")
@@ -157,14 +148,7 @@ def main():
   NAME = "jpdaysbetweenbot"
   PORT = os.environ.get('PORT')
   
-  url = urlparse.urlparse(os.environ['DATABASE_URL'])
-  dbname = url.path[1:]
-  user = url.username
-  password = url.password
-  host = url.hostname
-  port = url.port
-  
-  create_table(url, dbname, user, password, host, port)
+  create_table()
   
   updater = Updater(token=TOKEN)
   dp = updater.dispatcher
