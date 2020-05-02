@@ -146,7 +146,7 @@ def set_timezone(bot, update):
     update.message.reply_text(text="Please input a valid GMT timezone difference. It should be an integer between -12 and 12")
 
 def main():
-  TOKEN = ""
+  TOKEN = os.environ.get('API_KEY','')
   NAME = "jpdaysbetweenbot"
   PORT = os.environ.get('PORT')
   
