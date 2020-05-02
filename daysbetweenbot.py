@@ -147,7 +147,7 @@ def set_timezone(bot, update):
 
 def main():
   TOKEN = os.environ.get('API_KEY','')
-  NAME = "jpdaysbetweenbot"
+  NAME = "daysbetweenbot"
   PORT = os.environ.get('PORT')
   
   create_table()
