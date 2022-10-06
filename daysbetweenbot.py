@@ -20,6 +20,8 @@ def days_since(bot, update):
     update.message.reply_text(text=mess, reply_markup= reply_markup)
   else:
     update.message.reply_text(text="Please input a valid date in DD-MM-YYYY format!")
+    
+  sendEndOfLifeNotice(update)
 
 def days_until(bot, update):
   tz = timezone(update.message.from_user.id)
@@ -38,6 +40,8 @@ def days_until(bot, update):
     update.message.reply_text(text=mess, reply_markup= reply_markup)
   else:
     update.message.reply_text(text="Please input a valid date in DD-MM-YYYY format!")
+    
+  sendEndOfLifeNotice(update)
   
 def button(bot, update):
   query = update.callback_query
@@ -112,6 +116,8 @@ def days_between(bot, update):
     update.message.reply_text(text=message)
   else:
     update.message.reply_text(text="Please input valid dates in DD-MM-YYYY format!")
+    
+  sendEndOfLifeNotice(update)
 
 def start(bot, update):
   message = """Hello! This is DaysBetweenBot.
@@ -120,6 +126,7 @@ I can track the days since or days until a target date. I can also calculate the
 
 Use /help to find out about my commands"""
   update.message.reply_text(text=message)
+  sendEndOfLifeNotice(update)
 
 def help(bot, update):
   message = """/help - This command
@@ -135,6 +142,7 @@ def help(bot, update):
 
 Remember to input dates as DD-MM-YYYY, including the dashes!"""
   update.message.reply_text(text=message)
+  sendEndOfLifeNotice(update)
 
 def set_timezone(bot, update):
   user_input = update.message.text.partition(" ")[2]
@@ -144,6 +152,8 @@ def set_timezone(bot, update):
     update.message.reply_text(text="Timezone set!")
   else:
     update.message.reply_text(text="Please input a valid GMT timezone difference. It should be an integer between -12 and 12")
+    
+  sendEndOfLifeNotice(update)
 
 def main():
   TOKEN = os.environ.get('API_KEY','')
@@ -169,3 +179,12 @@ def main():
 
 if __name__ == "__main__":
   main()
+
+#------------------------------------End of Life Notice---------------------------------------------
+def sendEndOfLifeNotice(update):
+    message = """
+        **END OF LIFE NOTICE**
+
+This bot runs on heroku's free tier. Heroku's free tier is expiring in Nov 2022, hence the bot will cease to function then.
+    """
+    update.message.reply_text(text=message)
